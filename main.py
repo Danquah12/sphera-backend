@@ -54,7 +54,9 @@ app.add_middleware(
 )
 
 # ── Static files (uploaded media) ─────────────────────────────────
-app.mount("/static", StaticFiles(directory="static", html=False), name="static")
+_static_dir = Path(settings.upload_dir).parent  # ./static
+_static_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/static", StaticFiles(directory=str(_static_dir), html=False), name="static")
 
 # ── Mount routers ──────────────────────────────────────────────────
 PREFIX = "/api/v1"
